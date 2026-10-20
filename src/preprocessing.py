@@ -137,5 +137,27 @@ print("Processed training shape:", X_train_processed.shape)
 print("Original testing shape:", X_test.shape)
 print("Processed testing shape:", X_test_processed.shape)
 
+from sklearn.impute import SimpleImputer
+
+# Numerical preprocessing
+numerical_pipeline = Pipeline([
+    ("imputer", SimpleImputer(strategy="median")),
+    ("scaler", StandardScaler())
+])
+
+# Categorical preprocessing
+categorical_pipeline = Pipeline([
+    ("imputer", SimpleImputer(strategy="most_frequent")),
+    ("encoder", OneHotEncoder(handle_unknown="ignore"))
+])
+
+# Combine both pipelines
+preprocessor = ColumnTransformer([
+    ("num", numerical_pipeline, numerical_columns),
+    ("cat", categorical_pipeline, categorical_columns)
+])
+
+df.replace("?", pd.NA, inplace=True)
+
 
 
