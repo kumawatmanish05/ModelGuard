@@ -136,10 +136,10 @@ with mlflow.start_run(run_name="LogisticRegression"):
     print("\nClassification Report:\n", classification_report(y_test, y_pred))
 
     # Save trained model
-    from pathlib import Path
+    #from pathlib import Path
 
-    Path("models").mkdir(exist_ok=True)
-    joblib.dump(model_pipeline, "models/modelguard_model.pkl")
+    #Path("models").mkdir(exist_ok=True)
+    #joblib.dump(model_pipeline, "models/modelguard_model.pkl")
 
     print("\nTrained model saved successfully.")
 
