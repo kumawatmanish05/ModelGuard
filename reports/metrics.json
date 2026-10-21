@@ -1,6 +1,6 @@
 {
-    "accuracy": 0.8075,
-    "f1_weighted": 0.8185,
-    "recall_over_50k": 0.8527,
-    "quality_gate_passed": true
+    "accuracy": 0.856,
+    "f1_weighted": 0.8513,
+    "recall_over_50k": 0.6173,
+    "quality_gate_passed": false
 }

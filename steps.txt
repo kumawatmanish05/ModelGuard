@@ -13,4 +13,4 @@
                         New-Item src\evaluate.py -ItemType File
                         New-Item tests\test_preprocessing.py -ItemType File
 6. Load the dataset and run =  python -m src.preprocessing
-7. 
+7. python -m pip install mlflow
