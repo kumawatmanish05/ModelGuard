@@ -11,7 +11,8 @@ from sklearn.metrics import (
     accuracy_score,
     classification_report,
     confusion_matrix,
-    f1_score
+    f1_score,
+    recall_score
 )
 
 
@@ -70,7 +71,7 @@ preprocessor = ColumnTransformer([
 #Combine preprocessing and model into a single pipeline
 model_pipeline = Pipeline([
     ("preprocessor", preprocessor),
-    ("classifier", LogisticRegression(max_iter=1000))
+    ("classifier", LogisticRegression(max_iter=1000,class_weight="balanced"))
 ])
 
 #Train the model
@@ -89,3 +90,26 @@ print("\nF1 Score:", round(f1_score(y_test, y_pred, average="weighted"),4))
 
 print("\nClassification Report:\n", classification_report(y_test, y_pred))
 print("\nConfusion Matrix:\n", confusion_matrix(y_test, y_pred))
+
+
+# Calculate recall for the higher-income class
+income_recall = recall_score(
+    y_test,
+    y_pred,
+    pos_label=">50K"
+)
+
+print("\nRecall for >50K:", round(income_recall, 4))
+
+# ModelGuard quality gate
+RECALL_THRESHOLD = 0.80
+
+if income_recall >= RECALL_THRESHOLD:
+    print("\nModelGuard Quality Gate: PASS")
+    print("Model meets the minimum recall requirement.")
+else:
+    raise ValueError(
+        f"ModelGuard Quality Gate: FAIL. "
+        f"Recall is {income_recall:.4f}, "
+        f"but the minimum required is {RECALL_THRESHOLD:.2f}."
+    )
