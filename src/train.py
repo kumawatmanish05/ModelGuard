@@ -1,4 +1,7 @@
 import pandas as pd 
+import joblib
+
+from src.evaluate import evaluate_model
 
 from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
@@ -84,25 +87,12 @@ print("Testing rows:",len(X_test))
 #Make predictions on the Unseen test set
 y_pred = model_pipeline.predict(X_test)
 
-#Evaluate the model
-print("\nAccuracy:", round(accuracy_score(y_test, y_pred),4))
-print("\nF1 Score:", round(f1_score(y_test, y_pred, average="weighted"),4))
-
-print("\nClassification Report:\n", classification_report(y_test, y_pred))
-print("\nConfusion Matrix:\n", confusion_matrix(y_test, y_pred))
-
-
-# Calculate recall for the higher-income class
-income_recall = recall_score(
-    y_test,
-    y_pred,
-    pos_label=">50K"
-)
-
-print("\nRecall for >50K:", round(income_recall, 4))
+# Evaluate the model
+metrics = evaluate_model(y_test, y_pred)
 
 # ModelGuard quality gate
 RECALL_THRESHOLD = 0.80
+income_recall = metrics["recall_over_50K"]
 
 if income_recall >= RECALL_THRESHOLD:
     print("\nModelGuard Quality Gate: PASS")
@@ -113,3 +103,19 @@ else:
         f"Recall is {income_recall:.4f}, "
         f"but the minimum required is {RECALL_THRESHOLD:.2f}."
     )
+
+print("\nConfusion Matrix:\n", confusion_matrix(y_test, y_pred))
+print("\nClassification Report:\n", classification_report(y_test, y_pred))
+
+
+# Save the trained model to a file
+from pathlib import Path
+
+# Create the 'models' directory if it doesn't exist
+Path("models").mkdir(exist_ok=True)
+
+# Save the model pipeline to a file
+joblib.dump(model_pipeline, "models/modelguard_model.pkl")
+
+print("\nTrained model saved Successfully")
+
