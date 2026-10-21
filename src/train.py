@@ -92,7 +92,7 @@ metrics = evaluate_model(y_test, y_pred)
 
 # ModelGuard quality gate
 RECALL_THRESHOLD = 0.80
-income_recall = metrics["recall_over_50K"]
+income_recall = metrics["recall_over_50k"]
 
 if income_recall >= RECALL_THRESHOLD:
     print("\nModelGuard Quality Gate: PASS")
