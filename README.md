@@ -1,13 +1,6 @@
 
 # ModelGuard — Production ML Reliability Platform
 
-**Building reliable, testable, and deployment-ready machine learning systems.**
-
-<<<<<<< HEAD
-## Project Status
-In development.
- hiii 
-=======
 ModelGuard is an ML reliability and MLOps project designed to evaluate machine learning models against predefined quality requirements before they are considered for deployment. It combines model training, performance evaluation, experiment tracking, automated quality gates, and prediction workflows into a structured ML pipeline.
 
 The project currently uses the UCI Adult Income dataset to demonstrate how a model with higher accuracy can still fail an important performance requirement.
