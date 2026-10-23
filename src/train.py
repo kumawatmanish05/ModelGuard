@@ -2,7 +2,10 @@ import pandas as pd
 import joblib
 import mlflow
 
-from src.evaluate import evaluate_model
+from src.evaluate import evaluate_model , RECALL_THRESHOLD
+
+import json 
+from pathlib import Path 
 
 from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
@@ -22,6 +25,9 @@ from sklearn.metrics import (
 )
 
 mlflow.set_experiment("ModelGuard-Income-Classification")
+
+MODEL_PATH =Path("models/modelguard.pkl")
+METRICS_PATH = Path("reports/metrics.json")
 
 
 #Load dataset
@@ -92,6 +98,10 @@ random_forest_pipeline = Pipeline([
     ))
 ])
 
+accepted_model = None
+accepted_metrics = None
+accepted_model_name = None
+
 with mlflow.start_run(run_name="LogisticRegression"):
     #Train model
     model_pipeline.fit(X_train, y_train)
@@ -109,42 +119,33 @@ with mlflow.start_run(run_name="LogisticRegression"):
     #Log model and metrics to MLflow
     mlflow.log_param("model_type", "LogisticRegression")
     mlflow.log_param("class_weight", "balanced")
-    mlflow.log_metrics({"max_iter": 1000, "recall_threshold": 0.80})
+    mlflow.log_metrics({"max_iter": 1000, "recall_threshold": RECALL_THRESHOLD})
 
     #Log Evaluation metrics
     mlflow.log_metric("accuracy", metrics["accuracy"])
     mlflow.log_metric("f1_weighted", metrics["f1_weighted"])
     mlflow.log_metric("recall_over_50k", metrics["recall_over_50k"])
 
-    # ModelGuard Quality Gate
-    RECALL_THRESHOLD = 0.80
-    income_recall = metrics["recall_over_50k"]
+    passed = metrics["quality_gate_passed"]
 
-    if income_recall >= RECALL_THRESHOLD:
-        print("\nModelGuard Quality Gate: PASS")
-        print("Model meets the minimum recall requirement.")
-        mlflow.set_tag("quality_gate", "PASS")
-    else:
-        mlflow.set_tag("quality_gate", "FAIL")
-        raise ValueError(
-            f"ModelGuard Quality Gate: FAIL. "
-            f"Recall is {income_recall:.4f}, "
-            f"but the minimum required is {RECALL_THRESHOLD:.2f}."
-        )
+    if passed:
+        accepted_model = model_pipeline
+        accepted_metrics = metrics
+        print("\nLogistic Regression accepted based on the quality gate criteria.")
+
+    mlflow.set_tag("quality_gate","PASS" if  passed else "FAIL")
+    mlflow.set_tag("model_status","candidate" if passed else "rejected")
 
     print("\nConfusion Matrix:\n", confusion_matrix(y_test, y_pred))
     print("\nClassification Report:\n", classification_report(y_test, y_pred))
 
-    # Save trained model
-    #from pathlib import Path
-
-    #Path("models").mkdir(exist_ok=True)
-    #joblib.dump(model_pipeline, "models/modelguard_model.pkl")
-
-    print("\nTrained model saved successfully.")
+    print(
+        "\nLogistic Regression:",
+        "passed the quality gate." if passed
+        else "rejected by the quality gate."
+    )
 
 
-    
 # Experiment 2: Random Forest
 with mlflow.start_run(run_name="RandomForest"):
     random_forest_pipeline.fit(X_train, y_train)
@@ -157,22 +158,50 @@ with mlflow.start_run(run_name="RandomForest"):
     mlflow.log_param("n_estimators", 100)
     mlflow.log_param("class_weight", "balanced")
     mlflow.log_param("random_state", 42)
+    mlflow.log_param("recall_threshold", RECALL_THRESHOLD)
 
     mlflow.log_metric("accuracy", rf_metrics["accuracy"])
     mlflow.log_metric("f1_weighted", rf_metrics["f1_weighted"])
-    mlflow.log_metric(
-        "recall_over_50k",
-        rf_metrics["recall_over_50k"]
-    )
+    mlflow.log_metric("recall_over_50k", rf_metrics["recall_over_50k"])
 
-    mlflow.set_tag(
-        "quality_gate",
-        "PASS" if rf_metrics["recall_over_50k"] >= 0.80 else "FAIL"
-    )
+    rf_passed = rf_metrics["quality_gate_passed"]
 
-    if rf_metrics["recall_over_50k"] < 0.80:
-        print("Random Forest rejected by ModelGuard quality gate.")
-    else:
-        print("Random Forest passed ModelGuard quality gate.")
+    mlflow.set_tag("quality_gate","PASS" if rf_passed else "FAIL")
+    mlflow.set_tag("model_status","candidate" if rf_passed else "rejected")
 
-    print("\nRandom Forest experiment completed.")
+    if rf_passed:
+        if (accepted_metrics is None or rf_metrics["recall_over_50k"] > accepted_metrics["recall_over_50k"]):
+            accepted_model = random_forest_pipeline
+            accepted_metrics = rf_metrics
+            print("\nRandom Forest accepted based on the quality gate criteria.")
+
+    else :
+        print("\nRandom Forest rejected by the quality gate criteria.")
+
+    print("\nRandom forest experiment completed.")
+
+
+# Save the best model based on recall score
+
+if accepted_model is not None:
+    MODEL_PATH.parent.mkdir(parents=True ,exist_ok = True)
+    
+    joblib.dump(accepted_model, MODEL_PATH)
+
+    METRICS_PATH.parent.mkdir(parents =True ,exist_ok = True)
+
+    final_metrics = {
+        "selected_model": accepted_model_name,
+        **accepted_metrics,
+    }
+
+    with open(METRICS_PATH, "w",encoding="utf-8") as file:
+        json.dump(final_metrics, file, indent = 4)
+
+    print(f"\n Selected model : {accepted_model_name}")
+    print(f"Model saved to : {MODEL_PATH}")
+    print(f"Metrics saved to : {METRICS_PATH}")
+
+else:
+    print("\n No Model passed the quality gate .")
+    print("No new model was saved ")
