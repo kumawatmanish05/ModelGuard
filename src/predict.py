@@ -2,7 +2,7 @@ import joblib
 import pandas as pd
 
 #Load the saved model
-model = joblib.load("models/modelguard_model.pkl")
+model = joblib.load("models/modelguard.pkl")
 
 #Example person : 14 input features
 sample = {

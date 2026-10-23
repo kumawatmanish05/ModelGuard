@@ -131,6 +131,7 @@ with mlflow.start_run(run_name="LogisticRegression"):
     if passed:
         accepted_model = model_pipeline
         accepted_metrics = metrics
+        accepted_model_name = "Logistic_Regression"
         print("\nLogistic Regression accepted based on the quality gate criteria.")
 
     mlflow.set_tag("quality_gate","PASS" if  passed else "FAIL")
