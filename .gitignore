@@ -218,3 +218,12 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+
+# ModelGuard project-specific files
+.env.*
+!.env.example
+data/
+mlruns/
+.DS_Store
+Thumbs.db

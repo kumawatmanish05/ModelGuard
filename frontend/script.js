@@ -76,3 +76,75 @@ document.addEventListener("DOMContentLoaded", () => {
     loadModelMetrics();
     loadQualityStatus();
 });
+
+
+
+const predictionForm = document.getElementById("prediction-form");
+
+if (predictionForm) {
+    predictionForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const resultBox = document.getElementById("prediction-result");
+        const submitButton = predictionForm.querySelector('button[type="submit"]');
+
+        const formData = new FormData(predictionForm);
+        const applicant = Object.fromEntries(formData.entries());
+
+        // Convert numeric fields from strings to numbers
+        const numericFields = [
+            "age",
+            "fnlwgt",
+            "education_num",
+            "capital_gain",
+            "capital_loss",
+            "hours_per_week"
+        ];
+
+        numericFields.forEach((field) => {
+            applicant[field] = Number(applicant[field]);
+        });
+
+        resultBox.textContent = "Predicting income...";
+        submitButton.disabled = true;
+
+        try {
+            const response = await fetch("/predict", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(applicant)
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.detail || "Prediction request failed");
+            }
+
+            const isHighIncome = data.prediction.trim() === ">50K";
+
+            resultBox.innerHTML = `
+                <h3>Prediction Result</h3>
+                <p>
+                    <strong>Predicted income:</strong>
+                    ${data.prediction}
+                </p>
+                <p>
+                    ${isHighIncome
+                        ? "The model predicts income above $50K."
+                        : "The model predicts income of $50K or below."}
+                </p>
+                <small>This is a model prediction, not a guarantee of actual income.</small>
+            `;
+        } catch (error) {
+            resultBox.textContent = `Prediction failed: ${error.message}`;
+            console.error("Prediction error:", error);
+        } finally {
+            submitButton.disabled = false;
+        }
+    });
+}
+
+

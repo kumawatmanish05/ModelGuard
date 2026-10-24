@@ -25,10 +25,150 @@
             <p>Loading model metrics...</p>
         </section>
 
-        <section id="prediction">
-            <h2>Income Prediction</h2>
-            <p>Enter applicant details to generate a prediction.</p>
-        </section>
+        
+<section id="prediction">
+    <h2>Income Prediction</h2>
+    <p>Enter applicant details to generate a prediction.</p>
+
+    <form id="prediction-form">
+        <label>Age
+            <input type="number" name="age" value="35" min="17" max="100" required>
+        </label>
+
+        <label>Workclass
+            <select name="workclass" required>
+                <option value="Private">Private</option>
+                <option value="Self-emp-not-inc">Self-employed (not incorporated)</option>
+                <option value="Self-emp-inc">Self-employed (incorporated)</option>
+                <option value="Federal-gov">Federal government</option>
+                <option value="Local-gov">Local government</option>
+                <option value="State-gov">State government</option>
+                <option value="Without-pay">Without pay</option>
+                <option value="Never-worked">Never worked</option>
+            </select>
+        </label>
+
+        <label>Final weight (fnlwgt)
+            <input type="number" name="fnlwgt" value="200000" min="1" required>
+        </label>
+
+        <label>Education
+            <select name="education" required>
+                <option>HS-grad</option>
+                <option>Bachelors</option>
+                <option>Some-college</option>
+                <option>Masters</option>
+                <option>Assoc-voc</option>
+                <option>Assoc-acdm</option>
+                <option>11th</option>
+                <option>10th</option>
+                <option>7th-8th</option>
+                <option>9th</option>
+                <option>12th</option>
+                <option>5th-6th</option>
+                <option>1st-4th</option>
+                <option>Preschool</option>
+                <option>Prof-school</option>
+                <option>Doctorate</option>
+            </select>
+        </label>
+
+        <label>Education years
+            <input type="number" name="education_num" value="13" min="1" max="16" required>
+        </label>
+
+        <label>Marital status
+            <select name="marital_status" required>
+                <option>Never-married</option>
+                <option>Married-civ-spouse</option>
+                <option>Divorced</option>
+                <option>Separated</option>
+                <option>Widowed</option>
+                <option>Married-spouse-absent</option>
+                <option>Married-AF-spouse</option>
+            </select>
+        </label>
+
+        <label>Occupation
+            <select name="occupation" required>
+                <option>Exec-managerial</option>
+                <option>Prof-specialty</option>
+                <option>Craft-repair</option>
+                <option>Adm-clerical</option>
+                <option>Sales</option>
+                <option>Other-service</option>
+                <option>Machine-op-inspct</option>
+                <option>Transport-moving</option>
+                <option>Handlers-cleaners</option>
+                <option>Farming-fishing</option>
+                <option>Tech-support</option>
+                <option>Protective-serv</option>
+                <option>Priv-house-serv</option>
+                <option>Armed-Forces</option>
+            </select>
+        </label>
+
+        <label>Relationship
+            <select name="relationship" required>
+                <option>Husband</option>
+                <option>Not-in-family</option>
+                <option>Own-child</option>
+                <option>Unmarried</option>
+                <option>Wife</option>
+                <option>Other-relative</option>
+            </select>
+        </label>
+
+        <label>Race
+            <select name="race" required>
+                <option>White</option>
+                <option>Black</option>
+                <option>Asian-Pac-Islander</option>
+                <option>Amer-Indian-Eskimo</option>
+                <option>Other</option>
+            </select>
+        </label>
+
+        <label>Sex
+            <select name="sex" required>
+                <option>Male</option>
+                <option>Female</option>
+            </select>
+        </label>
+
+        <label>Capital gain
+            <input type="number" name="capital_gain" value="0" min="0" required>
+        </label>
+
+        <label>Capital loss
+            <input type="number" name="capital_loss" value="0" min="0" required>
+        </label>
+
+        <label>Hours worked per week
+            <input type="number" name="hours_per_week" value="40" min="1" max="99" required>
+        </label>
+
+        <label>Native country
+            <select name="native_country" required>
+                <option>United-States</option>
+                <option>India</option>
+                <option>Mexico</option>
+                <option>Canada</option>
+                <option>England</option>
+                <option>Germany</option>
+                <option>Philippines</option>
+                <option>China</option>
+                <option>Japan</option>
+                <option>Other</option>
+            </select>
+        </label>
+
+        <button type="submit">Predict Income</button>
+    </form>
+
+    <div id="prediction-result" role="status" aria-live="polite"></div>
+</section>
+
 
                 <section id="quality">
             <h2>Quality Gate</h2>
