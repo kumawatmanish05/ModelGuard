@@ -14,3 +14,48 @@
                         New-Item tests\test_preprocessing.py -ItemType File
 6. Load the dataset and run =  python -m src.preprocessing
 7. python -m pip install mlflow
+
+# FastAPI backend
+
+8. python -m pip show fastapi
+9 . Start the server  = python -m uvicorn app.main:app --reload
+10.ctrl + c in terminal to Stop the server 
+
+#Add automated tests
+11.python -m pytest --version
+12.run the test : python -m pytest tests/test_api.py -v
+
+#CI 
+
+
+
+
+# Docker 
+
+Start-Process "$env:ProgramFiles\Docker\Docker\Docker Desktop.exe"
+
+docker build -t modelguard-api .
+
+docker run --name modelguard-api -p 8000:8000 modelguard-api
+
+docker ps
+
+docker images modelguard-api
+
+docker stop stoic_payne
+
+docker rm stoic_payne
+
+docker run -d --name modelguard-api -p 8000:8000 modelguard-api
+
+docker ps -a
+
+docker rm -f modelguard-api
+
+# dockerignore 
+Docker sends project files to the build process. We don't want it 
+copying unnecessary files like your virtual environment, datasets,
+ Git history, or test cache into the image. This keeps the image 
+ smaller and the build faster.
+ 
+ 
