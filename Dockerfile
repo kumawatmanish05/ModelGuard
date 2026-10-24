@@ -10,6 +10,7 @@ COPY app/ ./app/
 COPY models/ ./models/
 COPY reports/ ./reports/
 COPY src/ ./src/
+COPY frontend/ ./frontend/
 
 EXPOSE 8000
 

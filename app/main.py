@@ -3,12 +3,20 @@ from pydantic import BaseModel
 import joblib
 import pandas as pd
 import json 
+from pathlib import Path
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 
 app = FastAPI(
     title = "ModelGuard API",
     description = "ML model Reliability and prediction platform",
     version = "1.0.0",
 )
+
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+FRONTEND_DIR = BASE_DIR / "frontend"
+
 
 #Load the Saved model once when the API starts
 MODEL_PATH = "models/modelguard.pkl"
@@ -36,10 +44,7 @@ class IncomeInput(BaseModel):
 
 @app.get("/")
 def home():
-    return{
-        "message":"Welcome to modelGuard API",
-        "status":"Running",
-    }
+    return FileResponse(FRONTEND_DIR / "index.html")
 
 @app.get("/health")
 def health_check():
@@ -73,3 +78,9 @@ def predict_income(data: IncomeInput):
     prediction = model.predict(input_data)[0]
 
     return {"prediction": str(prediction)}
+
+app.mount(
+    "/",
+    StaticFiles(directory=FRONTEND_DIR),
+    name="frontent",
+)
