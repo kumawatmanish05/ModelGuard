@@ -10,6 +10,14 @@ ModelGuard is a machine learning reliability platform that evaluates models agai
 
 ---
 
+## 🖥️ Application Preview
+
+![ModelGuard Dashboard](screenshots/dashboard.png)
+
+*ModelGuard dashboard showing model performance metrics and quality-gate status.*
+
+--- 
+
 ## 📌 Project Overview
 
 A machine learning model with high accuracy can still fail to identify important cases. ModelGuard demonstrates how predefined quality requirements can be used to evaluate candidate models instead of selecting a model based on accuracy alone.
