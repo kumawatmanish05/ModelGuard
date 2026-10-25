@@ -1,180 +1,340 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="ModelGuard ML Reliability Platform">
+    <meta name="theme-color" content="#f6f7fb">
     <title>ModelGuard | ML Reliability Platform</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>ModelGuard</h1>
-        <p>ML Reliability Platform</p>
-    </header>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <a class="brand" href="/" aria-label="ModelGuard home">
+                <span class="brand-icon">M</span>
+                <span>
+                    <strong>ModelGuard</strong>
+                    <small>ML RELIABILITY</small>
+                </span>
+            </a>
 
-    <main>
-        <section id="overview">
-            <h2>Model Overview</h2>
-            <p>Monitor model performance and reliability.</p>
-        </section>
+            <div class="nav-label">WORKSPACE</div>
+            <nav class="sidebar-nav" aria-label="Main navigation">
+                <a class="nav-link active" href="#overview">
+                    <span class="nav-icon">⌂</span> Overview
+                </a>
+                <a class="nav-link" href="#metrics">
+                    <span class="nav-icon">▥</span> Model performance
+                </a>
+                <a class="nav-link" href="#prediction">
+                    <span class="nav-icon">✳</span> Income prediction
+                </a>
+                <a class="nav-link" href="#quality">
+                    <span class="nav-icon">◇</span> Quality gate
+                </a>
+            </nav>
 
-        <section id="metrics">
-            <h2>Model Metrics</h2>
-            <p>Loading model metrics...</p>
-        </section>
+            <div class="sidebar-bottom">
+                <div class="sidebar-status">
+                    <span class="status-dot"></span>
+                    <div>
+                        <strong>API connected</strong>
+                        <small>Model service online</small>
+                    </div>
+                </div>
+                <p class="sidebar-version">ModelGuard · v1.0</p>
+            </div>
+        </aside>
 
-        
-<section id="prediction">
-    <h2>Income Prediction</h2>
-    <p>Enter applicant details to generate a prediction.</p>
+        <main class="main-content">
+            <header class="topbar">
+                <div>
+                    <p class="eyebrow">WORKSPACE / OVERVIEW</p>
+                    <h1>Model intelligence</h1>
+                </div>
+                
+                <div class="topbar-actions">
 
-    <form id="prediction-form">
-        <label>Age
-            <input type="number" name="age" value="35" min="17" max="100" required>
-        </label>
+                    <a class="topbar-link" href="credits.html">
+                           Credits
+                    </a>
+                    
+                    <a class="topbar-link" href="https://github.com/kumawatmanish05/ModelGuard"
+                        target="_blank" rel="noopener noreferrer">
+                          GitHub ↗
+                    </a>
 
-        <label>Workclass
-            <select name="workclass" required>
-                <option value="Private">Private</option>
-                <option value="Self-emp-not-inc">Self-employed (not incorporated)</option>
-                <option value="Self-emp-inc">Self-employed (incorporated)</option>
-                <option value="Federal-gov">Federal government</option>
-                <option value="Local-gov">Local government</option>
-                <option value="State-gov">State government</option>
-                <option value="Without-pay">Without pay</option>
-                <option value="Never-worked">Never worked</option>
-            </select>
-        </label>
+                    <a class="topbar-link" href="/docs" target="_blank"
+                    rel="noopener noreferrer">
+                          API documentation ↗
+                    </a>
+                </div>
 
-        <label>Final weight (fnlwgt)
-            <input type="number" name="fnlwgt" value="200000" min="1" required>
-        </label>
+            </header>
 
-        <label>Education
-            <select name="education" required>
-                <option>HS-grad</option>
-                <option>Bachelors</option>
-                <option>Some-college</option>
-                <option>Masters</option>
-                <option>Assoc-voc</option>
-                <option>Assoc-acdm</option>
-                <option>11th</option>
-                <option>10th</option>
-                <option>7th-8th</option>
-                <option>9th</option>
-                <option>12th</option>
-                <option>5th-6th</option>
-                <option>1st-4th</option>
-                <option>Preschool</option>
-                <option>Prof-school</option>
-                <option>Doctorate</option>
-            </select>
-        </label>
+            <section id="overview" class="welcome-panel">
+                <div class="welcome-copy">
+                    <span class="welcome-tag">ML OPERATIONS</span>
+                    <h2>Reliable predictions.<br>Measurable performance.</h2>
+                    <p>
+                        Monitor model quality, review evaluation metrics,
+                        and generate predictions from one workspace.
+                    </p>
+                    <a class="primary-link" href="#prediction">
+                        Explore predictions <span>→</span>
+                    </a>
+                </div>
+                <div class="welcome-art" aria-hidden="true">
+                    <div class="art-orbit orbit-one"></div>
+                    <div class="art-orbit orbit-two"></div>
+                    <div class="art-core">
+                        <span>MG</span>
+                        <small>MODEL<br>GUARD</small>
+                    </div>
+                    <span class="art-node node-one">✓</span>
+                    <span class="art-node node-two">ML</span>
+                    <span class="art-node node-three">↗</span>
+                </div>
+            </section>
 
-        <label>Education years
-            <input type="number" name="education_num" value="13" min="1" max="16" required>
-        </label>
+            <section class="section-block" aria-labelledby="metrics-heading">
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">MODEL MONITORING</p>
+                        <h2 id="metrics-heading">Performance overview</h2>
+                    </div>
+                    <span class="subtle-chip">Evaluation metrics</span>
+                </div>
 
-        <label>Marital status
-            <select name="marital_status" required>
-                <option>Never-married</option>
-                <option>Married-civ-spouse</option>
-                <option>Divorced</option>
-                <option>Separated</option>
-                <option>Widowed</option>
-                <option>Married-spouse-absent</option>
-                <option>Married-AF-spouse</option>
-            </select>
-        </label>
+                <div id="metrics" class="metrics-grid" aria-live="polite">
+                    <article class="metric-card">
+                        <span class="metric-label">Selected model</span>
+                        <h3>Loading...</h3>
+                        <p>Active classifier</p>
+                    </article>
+                    <article class="metric-card">
+                        <span class="metric-label">Accuracy</span>
+                        <h3>—</h3>
+                        <p>Overall correctness</p>
+                    </article>
+                    <article class="metric-card">
+                        <span class="metric-label">Weighted F1</span>
+                        <h3>—</h3>
+                        <p>Precision and recall balance</p>
+                    </article>
+                    <article class="metric-card accent-card">
+                        <span class="metric-label">Recall · &gt;50K</span>
+                        <h3>—</h3>
+                        <p>Positive-class detection</p>
+                    </article>
+                </div>
+            </section>
 
-        <label>Occupation
-            <select name="occupation" required>
-                <option>Exec-managerial</option>
-                <option>Prof-specialty</option>
-                <option>Craft-repair</option>
-                <option>Adm-clerical</option>
-                <option>Sales</option>
-                <option>Other-service</option>
-                <option>Machine-op-inspct</option>
-                <option>Transport-moving</option>
-                <option>Handlers-cleaners</option>
-                <option>Farming-fishing</option>
-                <option>Tech-support</option>
-                <option>Protective-serv</option>
-                <option>Priv-house-serv</option>
-                <option>Armed-Forces</option>
-            </select>
-        </label>
+            <section id="quality" class="quality-panel section-block">
+                <div class="quality-icon" aria-hidden="true">◇</div>
+                <div class="quality-copy">
+                    <p class="eyebrow">MODEL GOVERNANCE</p>
+                    <h2>Quality gate</h2>
+                    <p>Checking model quality and required recall threshold...</p>
+                </div>
+                <div class="quality-result">
+                    <span class="status-dot"></span>
+                    <span>Checking status</span>
+                </div>
+            </section>
 
-        <label>Relationship
-            <select name="relationship" required>
-                <option>Husband</option>
-                <option>Not-in-family</option>
-                <option>Own-child</option>
-                <option>Unmarried</option>
-                <option>Wife</option>
-                <option>Other-relative</option>
-            </select>
-        </label>
+            <section id="prediction" class="prediction-section section-block">
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">INFERENCE WORKSPACE</p>
+                        <h2>Income prediction</h2>
+                        <p class="section-description">
+                            Enter applicant attributes to run an inference
+                            using the trained classification model.
+                        </p>
+                    </div>
+                    <span class="subtle-chip">14 input features</span>
+                </div>
 
-        <label>Race
-            <select name="race" required>
-                <option>White</option>
-                <option>Black</option>
-                <option>Asian-Pac-Islander</option>
-                <option>Amer-Indian-Eskimo</option>
-                <option>Other</option>
-            </select>
-        </label>
+                <form id="prediction-form">
+                    <div class="form-group">
+                        <label for="age">Age</label>
+                        <input id="age" type="number" name="age"
+                               value="35" min="17" max="100" required>
+                    </div>
 
-        <label>Sex
-            <select name="sex" required>
-                <option>Male</option>
-                <option>Female</option>
-            </select>
-        </label>
+                    <div class="form-group">
+                        <label for="workclass">Workclass</label>
+                        <select id="workclass" name="workclass" required>
+                            <option value="Private">Private</option>
+                            <option value="Self-emp-not-inc">Self-employed (not incorporated)</option>
+                            <option value="Self-emp-inc">Self-employed (incorporated)</option>
+                            <option value="Federal-gov">Federal government</option>
+                            <option value="Local-gov">Local government</option>
+                            <option value="State-gov">State government</option>
+                            <option value="Without-pay">Without pay</option>
+                            <option value="Never-worked">Never worked</option>
+                        </select>
+                    </div>
 
-        <label>Capital gain
-            <input type="number" name="capital_gain" value="0" min="0" required>
-        </label>
+                    <div class="form-group">
+                        <label for="fnlwgt">Final weight</label>
+                        <input id="fnlwgt" type="number" name="fnlwgt"
+                               value="200000" min="1" required>
+                    </div>
 
-        <label>Capital loss
-            <input type="number" name="capital_loss" value="0" min="0" required>
-        </label>
+                    <div class="form-group">
+                        <label for="education">Education</label>
+                        <select id="education" name="education" required>
+                            <option>HS-grad</option>
+                            <option>Bachelors</option>
+                            <option>Some-college</option>
+                            <option>Masters</option>
+                            <option>Assoc-voc</option>
+                            <option>Assoc-acdm</option>
+                            <option>11th</option>
+                            <option>10th</option>
+                            <option>7th-8th</option>
+                            <option>9th</option>
+                            <option>12th</option>
+                            <option>5th-6th</option>
+                            <option>1st-4th</option>
+                            <option>Preschool</option>
+                            <option>Prof-school</option>
+                            <option>Doctorate</option>
+                        </select>
+                    </div>
 
-        <label>Hours worked per week
-            <input type="number" name="hours_per_week" value="40" min="1" max="99" required>
-        </label>
+                    <div class="form-group">
+                        <label for="education_num">Education years</label>
+                        <input id="education_num" type="number"
+                               name="education_num" value="13"
+                               min="1" max="16" required>
+                    </div>
 
-        <label>Native country
-            <select name="native_country" required>
-                <option>United-States</option>
-                <option>India</option>
-                <option>Mexico</option>
-                <option>Canada</option>
-                <option>England</option>
-                <option>Germany</option>
-                <option>Philippines</option>
-                <option>China</option>
-                <option>Japan</option>
-                <option>Other</option>
-            </select>
-        </label>
+                    <div class="form-group">
+                        <label for="marital_status">Marital status</label>
+                        <select id="marital_status" name="marital_status" required>
+                            <option>Never-married</option>
+                            <option>Married-civ-spouse</option>
+                            <option>Divorced</option>
+                            <option>Separated</option>
+                            <option>Widowed</option>
+                            <option>Married-spouse-absent</option>
+                            <option>Married-AF-spouse</option>
+                        </select>
+                    </div>
 
-        <button type="submit">Predict Income</button>
-    </form>
+                    <div class="form-group">
+                        <label for="occupation">Occupation</label>
+                        <select id="occupation" name="occupation" required>
+                            <option>Exec-managerial</option>
+                            <option>Prof-specialty</option>
+                            <option>Craft-repair</option>
+                            <option>Adm-clerical</option>
+                            <option>Sales</option>
+                            <option>Other-service</option>
+                            <option>Machine-op-inspct</option>
+                            <option>Transport-moving</option>
+                            <option>Handlers-cleaners</option>
+                            <option>Farming-fishing</option>
+                            <option>Tech-support</option>
+                            <option>Protective-serv</option>
+                            <option>Priv-house-serv</option>
+                            <option>Armed-Forces</option>
+                        </select>
+                    </div>
 
-    <div id="prediction-result" role="status" aria-live="polite"></div>
-</section>
+                    <div class="form-group">
+                        <label for="relationship">Relationship</label>
+                        <select id="relationship" name="relationship" required>
+                            <option>Husband</option>
+                            <option>Not-in-family</option>
+                            <option>Own-child</option>
+                            <option>Unmarried</option>
+                            <option>Wife</option>
+                            <option>Other-relative</option>
+                        </select>
+                    </div>
 
+                    <div class="form-group">
+                        <label for="race">Race</label>
+                        <select id="race" name="race" required>
+                            <option>White</option>
+                            <option>Black</option>
+                            <option>Asian-Pac-Islander</option>
+                            <option>Amer-Indian-Eskimo</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
 
-                <section id="quality">
-            <h2>Quality Gate</h2>
-            <p>Checking model quality...</p>
-        </section>
-    </main>
+                    <div class="form-group">
+                        <label for="sex">Sex</label>
+                        <select id="sex" name="sex" required>
+                            <option>Male</option>
+                            <option>Female</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="capital_gain">Capital gain</label>
+                        <input id="capital_gain" type="number"
+                               name="capital_gain" value="0" min="0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="capital_loss">Capital loss</label>
+                        <input id="capital_loss" type="number"
+                               name="capital_loss" value="0" min="0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="hours_per_week">Hours worked per week</label>
+                        <input id="hours_per_week" type="number"
+                               name="hours_per_week" value="40"
+                               min="1" max="99" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="native_country">Native country</label>
+                        <select id="native_country" name="native_country" required>
+                            <option>United-States</option>
+                            <option>India</option>
+                            <option>Mexico</option>
+                            <option>Canada</option>
+                            <option>England</option>
+                            <option>Germany</option>
+                            <option>Philippines</option>
+                            <option>China</option>
+                            <option>Japan</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-actions">
+                        <p>Predictions are model estimates, not verified income.</p>
+                        <button type="submit" class="predict-button">
+                            Run prediction <span aria-hidden="true">→</span>
+                        </button>
+                    </div>
+                </form>
+
+                <div id="prediction-result" role="status" aria-live="polite">
+                    <span class="result-placeholder">
+                        Your prediction will appear here after submission.
+                    </span>
+                </div>
+            </section>
+
+            <footer class="page-footer">
+                <span>ModelGuard · ML Reliability Platform</span>
+                <span>Built for model evaluation and monitoring</span>
+            </footer>
+        </main>
+    </div>
 
     <script src="script.js"></script>
 </body>
